@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use App\Jobs\RemoveBackground;
 use App\Models\Thumbnail;
+use Illuminate\Support\Facades\Log;
 
 class ThumbnailController extends Controller
 {
@@ -45,7 +46,10 @@ class ThumbnailController extends Controller
         $thumbnailUrl = $data['thumbnail_url'];
 
         // Dispatch the job
+        Log::info('Dispatching RemoveBackground job for user: ' . $request->user()->id . ' with thumbnail URL: ' . $thumbnailUrl);
+
         RemoveBackground::dispatch($request->user(), $thumbnailUrl);
+        Log::info('Finished dispatching RemoveBackground job for user: ' . $request->user()->id . ' with thumbnail URL: ' . $thumbnailUrl);
 
         return redirect(route('dashboard'))->with('status', 'background-removal-queued');
     }
