@@ -45,13 +45,38 @@ class ThumbnailController extends Controller
 
         $thumbnailUrl = $data['thumbnail_url'];
 
-        // Dispatch the job
-        Log::info('Dispatching RemoveBackground job for user: ' . $request->user()->id . ' with thumbnail URL: ' . $thumbnailUrl);
+        $response = Http::get($thumbnailUrl);
 
-        RemoveBackground::dispatch($request->user(), $thumbnailUrl);
-        Log::info('Finished dispatching RemoveBackground job for user: ' . $request->user()->id . ' with thumbnail URL: ' . $thumbnailUrl);
+        if ($response->successful()) {
+            $fileContents = $response->body();
+            $fileName = basename($thumbnailUrl);
+            $fileNameNew = 'bgr_' . basename($thumbnailUrl);
 
-        return redirect(route('dashboard'))->with('status', 'background-removal-queued');
+            // Send the file to the external API
+            $apiResponse = Http::attach(
+                'thumbnail', $fileContents, $fileName
+            )->post(config('app.bg_worker_endpoint'));
+
+            if ($apiResponse->successful()) {
+                // Retrieve the file contents from the response
+                $processedImageContents = $apiResponse->body();
+
+                // Generate a unique filename for the processed image
+                $processedFileName = $request->user()->id . '/' . $fileNameNew;
+
+                // Save the processed image directly to S3
+                Storage::put($processedFileName, $processedImageContents, 'public');
+
+                $request->user()->thumbnails()->create([
+                    'name' => $fileNameNew
+                ]);
+
+                return redirect(route('dashboard'))->with('status', 'background-removed');
+
+            }
+
+            return redirect(route('dashboard'))->with('error', 'failed-to-download-thumbnail');
+        }
     }
 
     public function destroy(Request $request,Thumbnail $thumbnail)
