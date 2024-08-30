@@ -1,5 +1,5 @@
 <h2 class="text-2xl font-bold text-white text-center mb-12">Upload your image<span class="text-sm text-gray-400"> (10MB Max)</span></h2>
-@if (session('status') === 'thumbnail-uploaded')
+@if (session('status') === 'thumbnail-uploaded' || session('status') === 'background-removed')
     <div x-data="{ show: true }"
     x-show="show"
     x-transition
@@ -14,7 +14,7 @@
                 </svg>
             </div>
             <div class="ml-3">
-                <div class="text-sm font-medium text-green-800">Thumbnail uploaded!</div>
+                <div class="text-sm font-medium text-green-800">{{ session('status') === 'thumbnail-uploaded' ? 'Thumbnail uploaded!' : 'Background removed!' }}</div>
             </div>
         </div>
     </div>
