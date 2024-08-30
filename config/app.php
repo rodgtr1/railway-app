@@ -15,6 +15,10 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'bg_worker_endpoint' => env('BG_WORKER_ENDPOINT', "http://127.0.0.1:9000/removeBackground"),
+
+
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

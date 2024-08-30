@@ -43,6 +43,7 @@ class ThumbnailController extends Controller
         ]);
 
         $thumbnailUrl = $data['thumbnail_url'];
+
         $response = Http::get($thumbnailUrl);
 
         if ($response->successful()) {
@@ -53,7 +54,7 @@ class ThumbnailController extends Controller
             // Send the file to the external API
             $apiResponse = Http::attach(
                 'thumbnail', $fileContents, $fileName
-            )->post('http://127.0.0.1:9000/removeBackground');
+            )->post(config('app.bg_worker_endpoint'));
 
             if ($apiResponse->successful()) {
                 // Retrieve the file contents from the response

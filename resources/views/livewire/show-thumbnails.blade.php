@@ -27,12 +27,12 @@
                     </g>
                 </g>
             </svg></a>
-            <form action="{{ route('thumbnail.removeBackground') }}" id="bgForm" method="POST" enctype="multipart/form-data" class="inline">
+            <form action="{{ route('thumbnail.removeBackground') }}" id="bgForm-{{ $thumb->id }}" method="POST" enctype="multipart/form-data" class="inline">
                 @csrf
                 <input type="hidden" name="thumbnail_url" value="{{ Storage::url("thumbnails/" . $thumb->user_id . '/' . $thumb->name) }}">
                 <button type="submit" class="bg-gray-700 text-white px-4 py-2 rounded text-sm"
                     x-data="{loading:false}"
-                    x-on:click="loading=true; document.getElementById('bgForm').submit();"
+                    x-on:click="loading=true; document.getElementById('bgForm-{{ $thumb->id }}').submit();"
                     x-html="loading ? 'Processing...' : 'Remove BG'" class="disabled:opacity-50"
                     x-bind:disabled="loading"
     >Remove BG</button>
