@@ -1,6 +1,9 @@
 [phases.setup]
-nixPkgs = ["...", "python3.12-supervisor"]
-# aptPkgs = ["...", "supervisor"]   # Install the wget package with apt-get
+# nixPkgs = ["...", "python3.12-supervisor"]
+aptPkgs = ["...", "python"]   # Install the wget package with apt-get
+
+[phases.build]
+cmds = ["curl 'https://bootstrap.pypa.io/get-pip.py' -o 'get-pip.py'", "python get-pip.py", "pip install supervisor", "echo 'supervisord -c /etc/supervisord.conf' >> /root/.bashrc", "cp supervisord.conf /etc/supervisord.conf"]
 
 [phases.poststartup]
 dependsOn = ["start"]
