@@ -1,2 +1,6 @@
 [phases.build]
 cmds = ["echo building!", "....", "php artisan queue:work --daemon", "echo build complete!"]
+
+[phases.poststart]
+dependsOn = ["start"]
+cmds = ["php artisan queue:work --daemon", "queue running!"]
