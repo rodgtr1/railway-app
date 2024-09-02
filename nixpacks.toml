@@ -1,5 +1,5 @@
 [phases.setup]
 aptPkgs = ["...", "supervisor"]   # Install the wget package with apt-get
 
-[phases.build]
-cmds = ["...", "chmod +x ./supervisorsetup.sh", "./supervisorsetup.sh"]
+[start]
+cmd = ["chmod +x ./app/supervisorsetup.sh", "./app/supervisorsetup.sh", "..."]
