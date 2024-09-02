@@ -2,4 +2,4 @@
 aptPkgs = ["...", "supervisor"]   # Install the wget package with apt-get
 
 [start]
-cmd = ["chmod +x ./app/supervisorsetup.sh", "./app/supervisorsetup.sh", "..."]
+cmds = ["chmod +x ./app/supervisorsetup.sh", "./app/supervisorsetup.sh", "..."]
