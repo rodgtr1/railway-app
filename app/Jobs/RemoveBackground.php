@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 
 class RemoveBackground implements ShouldQueue
 {
@@ -30,7 +31,7 @@ class RemoveBackground implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle()
     {
         $response = Http::get($this->thumbnailUrl);
 
@@ -58,6 +59,9 @@ class RemoveBackground implements ShouldQueue
                     'name' => $fileNameNew
                 ]);
             }
+
+        } else {
+            Log::error('Failed to download thumbnail: ' . $this->thumbnailUrl);
         }
     }
 }

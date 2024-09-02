@@ -45,38 +45,11 @@ class ThumbnailController extends Controller
 
         $thumbnailUrl = $data['thumbnail_url'];
 
-        $response = Http::get($thumbnailUrl);
+        RemoveBackground::dispatch($request->user(), $thumbnailUrl);
 
-        if ($response->successful()) {
-            $fileContents = $response->body();
-            $fileName = basename($thumbnailUrl);
-            $fileNameNew = 'bgr_' . basename($thumbnailUrl);
+        // Redirect back with a success message
+        return redirect()->back()->with('status', 'background-job-initiated');
 
-            // Send the file to the external API
-            $apiResponse = Http::attach(
-                'thumbnail', $fileContents, $fileName
-            )->post(config('app.bg_worker_endpoint'));
-
-            if ($apiResponse->successful()) {
-                // Retrieve the file contents from the response
-                $processedImageContents = $apiResponse->body();
-
-                // Generate a unique filename for the processed image
-                $processedFileName = $request->user()->id . '/' . $fileNameNew;
-
-                // Save the processed image directly to S3
-                Storage::put($processedFileName, $processedImageContents, 'public');
-
-                $request->user()->thumbnails()->create([
-                    'name' => $fileNameNew
-                ]);
-
-                return redirect(route('dashboard'))->with('status', 'background-removed');
-
-            }
-
-            return redirect(route('dashboard'))->with('error', 'failed-to-download-thumbnail');
-        }
     }
 
     public function destroy(Request $request,Thumbnail $thumbnail)
