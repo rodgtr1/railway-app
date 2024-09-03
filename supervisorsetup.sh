@@ -25,7 +25,6 @@ stopasgroup=true
 killasgroup=true
 numprocs=1
 redirect_stderr=true
-stdout_logfile= {project_directory}/worker.log
 EOL
 
 echo "Configuration file $CONFIG_FILE created successfully."
