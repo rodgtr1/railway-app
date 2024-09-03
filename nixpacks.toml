@@ -5,6 +5,6 @@ aptPkgs = ["...", "supervisor"]
 cmds = ["...", "chmod +x ./supervisorsetup.sh", "./supervisorsetup.sh"]
 
 [phases.worker]
-cmds = ["supervisord -c /etc/supervisor/supervisord.conf", "sleep 5", "supervisorctl status | awk '{print $1, $2}'"]
+cmds = ["supervisord -c /etc/supervisor/supervisord.conf", "sleep 5", "ps aux | grep supervisord"]
 dependsOn = ["build"]
 
