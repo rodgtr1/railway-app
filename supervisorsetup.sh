@@ -22,11 +22,8 @@ autostart=true
 autorestart=true
 stopasgroup=true
 killasgroup=true
-user=forge
 numprocs=8
 redirect_stderr=true
-stdout_logfile=/home/forge/app.com/worker.log
-stopwaitsecs=3600
 EOL
 
 echo "Configuration file $CONFIG_FILE created successfully."
