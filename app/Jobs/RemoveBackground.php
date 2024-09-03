@@ -40,19 +40,16 @@ class RemoveBackground implements ShouldQueue
             $fileName = basename($this->thumbnailUrl);
             $fileNameNew = 'bgr_' . $fileName;
 
-            // Send the file to the external API
             $apiResponse = Http::attach(
                 'thumbnail', $fileContents, $fileName
             )->post(config('app.bg_worker_endpoint'));
 
             if ($apiResponse->successful()) {
-                // Retrieve the file contents from the response
+
                 $processedImageContents = $apiResponse->body();
 
-                // Generate a unique filename for the processed image
                 $processedFileName = $this->user->id . '/' . $fileNameNew;
 
-                // Save the processed image directly to S3
                 Storage::put($processedFileName, $processedImageContents, 'public');
 
                 $this->user->thumbnails()->create([

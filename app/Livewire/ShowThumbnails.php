@@ -10,9 +10,9 @@ class ShowThumbnails extends Component
 
     public function mount()
     {
-        $userId = auth()->id(); // Get the authenticated user's ID
+        $userId = auth()->id();
         $this->thumbnails = Thumbnail::query()
-            ->where('user_id', $userId) // Filter by user ID
+            ->where('user_id', $userId)
             ->get();
     }
 

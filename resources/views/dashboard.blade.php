@@ -23,7 +23,7 @@
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <div class="text-sm font-medium text-green-800">{{ session('status') === 'thumbnail-uploaded' ? 'Thumbnail uploaded!' : 'Background removal init!' }}</div>
+                                <div class="text-sm font-medium text-green-800">{{ session('status') === 'thumbnail-uploaded' ? 'Thumbnail uploaded!' : 'Background removal queued up!' }}</div>
                             </div>
                         </div>
                     </div>
