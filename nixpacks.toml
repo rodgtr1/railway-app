@@ -5,6 +5,6 @@ aptPkgs = ["...", "supervisor"]
 cmds = ["...", "chmod +x ./supervisorsetup.sh", "./supervisorsetup.sh"]
 
 [phases.worker]
-cmds = ["pwd", "supervisord -c /etc/supervisor/config.d/laravel-worker.conf", "sleep 5", "ps aux | grep supervisord", "sleep 5", "ps aux | grep artisan", "ls /app"]
+cmds = ["pwd", "/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf", "sleep 5", "ps aux | grep supervisord", "sleep 5", "ps aux | grep artisan", "ls /app"]
 dependsOn = ["build"]
 
