@@ -17,7 +17,7 @@ echo "Creating $CONFIG_FILE with Laravel worker configuration..."
 cat <<EOL > "$CONFIG_FILE"
 [program:laravel-worker]
 process_name=%(program_name)s_%(process_num)02d
-command=php artisan queue:work sqs --sleep=3 --tries=3 --max-time=3600
+command=php artisan queue:work
 autostart=true
 autorestart=true
 stopasgroup=true
