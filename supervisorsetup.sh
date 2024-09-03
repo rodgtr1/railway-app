@@ -36,7 +36,7 @@ echo "Configuration file $CONFIG_FILE created successfully."
 echo "Creating $SUPERVISORD_CONF with Supervisor configuration..."
 cat <<EOL > "$SUPERVISORD_CONF"
 [supervisord]
-nodaemon=true
+nodaemon=false
 logfile=/var/log/supervisord.log
 pidfile=/var/run/supervisord.pid
 
