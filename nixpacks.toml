@@ -2,6 +2,6 @@
 aptPkgs = ["...", "supervisor"]   # Install the wget package with apt-get
 
 [phases.build]
-cmds = ["chmod +x ./supervisorsetup.sh", "./supervisorsetup.sh", "supervisorctl reread", "supervisorctl update", "supervisorctl start 'laravel-worker:*'", "..."]
+cmds = ["chmod +x ./supervisorsetup.sh", "./supervisorsetup.sh", "/usr/bin/supervisord", "..."]
 
 
