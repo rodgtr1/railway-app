@@ -1,10 +1,10 @@
-[phases.setup]
-aptPkgs = ["...", "supervisor"]
+# [phases.setup]
+# aptPkgs = ["...", "supervisor"]
 
-[phases.build]
-cmds = ["...", "chmod +x ./supervisorsetup.sh", "./supervisorsetup.sh"]
+# [phases.build]
+# cmds = ["...", "chmod +x ./supervisorsetup.sh", "./supervisorsetup.sh"]
 
-[phases.worker]
-cmds = ["pwd", "/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf", "sleep 5", "ps aux | grep supervisord", "sleep 5", "ps aux | grep artisan", "ls /app"]
-dependsOn = ["build"]
+# [phases.worker]
+# cmds = ["pwd", "/usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf", "sleep 5", "ps aux | grep supervisord", "sleep 5", "ps aux | grep artisan", "ls /app"]
+# dependsOn = ["build"]
 
