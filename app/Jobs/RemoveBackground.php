@@ -52,11 +52,20 @@ class RemoveBackground implements ShouldQueue
 
                 $processedFileName = $this->user->id . '/' . $fileNameNew;
 
-                Storage::put($processedFileName, $processedImageContents, 'public');
+                try {
+                    Storage::put($processedFileName, $processedImageContents, 'public');
+                } catch (\Throwable $th) {
+                    Log::error('Failed to upload to S3: ' . $th->getMessage());
+                }
 
-                $this->user->thumbnails()->create([
-                    'name' => $fileNameNew
-                ]);
+                try {
+                    $this->user->thumbnails()->create([
+                        'name' => $fileNameNew
+                    ]);
+                } catch (\Throwable $th) {
+                    Log::error('Failed to create thumbnail record: ' . $th->getMessage());
+                }
+
             } else {
                 Log::error('Failed to process image: ' . $apiResponse->status());
             }
