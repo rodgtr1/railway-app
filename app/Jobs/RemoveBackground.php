@@ -35,6 +35,7 @@ class RemoveBackground implements ShouldQueue
     public function handle()
     {
         Log::info('Starting job to remove background');
+        Log::info($this->thumbnailUrl);
         $response = Http::get($this->thumbnailUrl);
 
         if ($response->successful()) {
